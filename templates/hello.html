@@ -1,0 +1,110 @@
+<html>
+  <head>
+    <title>Carpet</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+
+  </head>
+  <body>
+    <div id="" class="container">
+      <h2>Enter the Details</h2>
+      <form action="" method="post" role="form" enctype = "multipart/form-data">
+        {{ form.csrf }}
+        <div class="form-group">
+          <label for="name">Lenght:</label>
+          <input type="number" class="form-control" autofocus required id="lenght" name="lenght" placeholder="Enter The lenght of the carpet in cm.">
+          <label for="email">Bredth:</label>
+          <input type="number" class="form-control" autofocus required id="bredth" name="bredth" placeholder="Enter the bredth of the carpet In cm">
+    
+          <label for="text">No. of Color:</label>
+          <input type="number" class="form-control" autofocus required id="no_of_colors" name="no_of_colors" placeholder="Enter the number of color used.">
+
+          <label for="text">Image</label>
+
+
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+            </div>
+            <div class="custom-file">
+          
+              <label class="custom-file-label" for="inputGroupFile01">
+              <i class="fa fa-cloud-upload"></i>Choose file</label>
+              <input type="file" autofocus required class="custom-file-input" id="image" name='image'aria-describedby="inputGroupFileAddon01">
+            </div>
+          </div>
+        </div>
+        <div class="img-responsive">
+        <img id="blah" src="" class="img-rounded" alt=" " style="height:150px;"/>
+          <script>
+            $('#blah').hide(); 
+          
+          </script>
+          
+    <div id="loader" style="display: none">
+        
+          
+          <div class="loading">&#8230;</div>
+
+    </div>
+    <div>
+        <button type="submit" onclick="loaderjs()" class="btn btn-success">Submit</button>
+      </div>
+    </form>
+  </div>
+    <script>
+      
+      function readURL(input) {
+      
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
+      
+          reader.onload = function(e) {
+            $('#blah').attr('src', e.target.result);
+        }
+      
+        reader.readAsDataURL(input.files[0]);
+        }
+      }
+      //fr loading screen
+      function loaderjs(){
+        var l = document.getElementById("lenght").value;
+        var b = document.getElementById("bredth").value;
+        var n = document.getElementById("no_of_colors").value;
+        var i = document.getElementById("image").value;
+        if(n=="" || l=="" || b=="" || i==""){
+          alert("Please Fill all the field");
+        }
+        else{
+          var ldr = document.getElementById("loader");
+          ldr.style.display = "block";
+        }
+      };
+      $("#image").change(function() {
+      readURL(this);
+      $("#blah").show();
+      });
+
+      $(".form-control").on("keypress keyup blur",function (event) {    
+                    $(this).val($(this).val().replace(/[^\d].+/, ""));
+                    if ((event.which < 48 || event.which > 57)) {
+                      event.preventDefault();
+                    }
+                  });
+      
+    
+      $('#image').change(function() {
+        var i = $(this).prev('label').clone();
+        var file = $('#image')[0].files[0].name;
+        $(this).prev('label').text(file);
+      });
+    </script>
+
+  </body>
+</html>
